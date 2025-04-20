@@ -13,8 +13,10 @@ const eslintConfig = [
 					reduce: 4
 				}
 			],
+			"import-x/extensions": "off",
 			"import-x/no-namespace": "off",
 			"import-x/no-restricted-paths": "off",
+			"import-x/prefer-default-export": "off",
 			"perfectionist/sort-classes": [
 				"error",
 				{

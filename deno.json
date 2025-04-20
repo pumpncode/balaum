@@ -1,9 +1,10 @@
 {
 	"tasks": {
-		"initialize": "deno run -R -W --allow-run=npm ./scripts/initialize.js",
 		"upkeep": "deno run --allow-run=npx jsr:@pumpn/upkeep",
 		"lint": "npx eslint@9.14.0",
-		"start": "deno run --env main.js"
+		"start": "deno run --env main.js",
+		"build": "tstl",
+		"dev": "tstl --watch"
 	},
 	"fmt": {
 		"options": {
@@ -17,12 +18,21 @@
 	},
 	"nodeModulesDir": "none",
 	"compilerOptions": {
+		"lib": [
+			"ESNext"
+		],
+		"types": [
+			"@typescript-to-lua/language-extensions",
+			"lua-types/5.4",
+			"love-typescript-definitions",
+			"./types/smods.d.ts",
+			"./types/balatro.d.ts",
+			"./types/socket.d.ts"
+		],
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
-		"checkJs": true,
+		"checkJs": false,
 		"exactOptionalPropertyTypes": true,
-		"jsx": "react-jsx",
-		"jsxImportSource": "preact",
 		"noErrorTruncation": true,
 		"noFallthroughCasesInSwitch": false,
 		"noImplicitAny": true,
@@ -33,22 +43,21 @@
 		"noUncheckedIndexedAccess": false,
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
-		"strictNullChecks": true,
-		"strict": true,
-		"strictPropertyInitialization": false,
-		"lib": [
-			"dom",
-			"dom.iterable",
-			"dom.asynciterable",
-			"deno.ns",
-			"deno.unstable"
-		]
+		"strict": true
 	},
 	"unstable": [
 		"temporal",
-		"kv"
+		"kv",
+		"net",
+		"http"
 	],
 	"imports": {
-		"@std/path": "jsr:@std/path@^1.0.8"
+		"@radashi-org/radashi": "jsr:@radashi-org/radashi@^12.4.0",
+		"@std/csv": "jsr:@std/csv@^1.0.5",
+		"@std/path": "jsr:@std/path@^1.0.8",
+		"@typescript-to-lua/language-extensions": "npm:@typescript-to-lua/language-extensions@^1.19.0",
+		"love-typescript-definitions": "npm:love-typescript-definitions@^11.5.0",
+		"lua-types": "npm:lua-types@^2.13.1",
+		"typescript-to-lua": "npm:typescript-to-lua@^1.31.0"
 	}
 }

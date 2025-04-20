@@ -1,0 +1,70 @@
+---
+config:
+  theme: neo-dark
+  layout: elk
+---
+stateDiagram
+  direction TB
+
+state Playing {
+    drawToHand
+    selectingHand
+    handPlayed
+}
+
+state Menus {
+    menu
+    blindSelect
+    gameOver
+    roundEval
+}
+
+  blindSelect --> menu:goToMenu
+  blindSelect --> drawToHand:selectBlind
+  blindSelect --> blindSelect:selectConsumeable, selectJoker, sellConsumeable, sellJoker, skipBlind, startRun, useConsumeable
+  drawToHand --> selectingHand:wait
+  gameOver --> menu:goToMenu
+  gameOver --> blindSelect:startRun
+
+  state isHandsZeroOrBlindScoreReached <<choice>>
+	handPlayed --> isHandsZeroOrBlindScoreReached:wait
+	isHandsZeroOrBlindScoreReached --> newRound:handsZeroOrBlindScoreReached
+	isHandsZeroOrBlindScoreReached --> handPlayed:notHandsZeroAndNotBlindScoreReached
+
+  handPlayed --> newRound:wait
+  handPlayed --> selectingHand:wait
+  menu --> blindSelect:startRun
+
+
+  state isBlindBeaten <<choice>>
+    newRound --> isBlindBeaten:wait
+    isBlindBeaten --> gameOver:blindNotBeaten
+    isBlindBeaten --> roundEval:blindBeaten
+
+  state inState <<choice>>
+    playTarot --> inState:wait
+    inState --> roundEval:inRoundEval
+    inState --> selectingHand:inSelectingHand
+    inState --> shop:inShop
+    inState --> smodsBoosterOpened:inSmodsBoosterOpened
+
+  roundEval --> shop:cashOut
+  roundEval --> menu:goToMenu
+  roundEval --> roundEval:selectConsumeable, selectJoker, sellConsumeable, sellJoker, useConsumeable
+  roundEval --> blindSelect:startRun
+  selectingHand --> drawToHand:discardCards
+  selectingHand --> menu:goToMenu
+  selectingHand --> handPlayed:playCards
+  selectingHand --> selectingHand:selectCards, selectConsumeable, selectJoker, sellConsumeable, sellJoker, sortHandByRank, sortHandBySuit
+  selectingHand --> blindSelect:startRun
+  selectingHand --> playTarot:useConsumeable
+  shop --> playTarot:buyAndUseCard, redeemVoucher, useConsumeable
+  shop --> shop:buyCard, reroll, selectCard, selectConsumeable, selectJoker, selectPack, selectVoucher, sellConsumeable, sellJoker
+  shop --> smodsBoosterOpened:buyPack
+  shop --> blindSelect:continue, startRun
+  shop --> menu:goToMenu
+  smodsBoosterOpened --> blindSelect:buyCardInPack, buyConsumeableInPack, buyJokerInPack, skipPack, startRun
+  smodsBoosterOpened --> shop:buyCardInPack, buyConsumeableInPack, buyJokerInPack, skipPack
+  smodsBoosterOpened --> menu:goToMenu
+  smodsBoosterOpened --> smodsBoosterOpened:selectCardInHand, selectCardInPack, selectConsumeable, selectConsumeableInPack, selectJoker, selectJokerInPack, sellConsumeable, sellJoker
+  smodsBoosterOpened --> playTarot:useConsumeable

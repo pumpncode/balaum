@@ -1,0 +1,11 @@
+{
+	"id": "balaum",
+	"name": "balaum",
+	"author": [
+		"nnmrts"
+	],
+	"description": "balatro automation mod",
+	"prefix": "balaum",
+	"main_file": "balaum.lua",
+	"version": "0.1.0"
+}

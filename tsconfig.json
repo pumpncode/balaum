@@ -1,27 +1,44 @@
 {
+	"$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
 	"compilerOptions": {
-		"allowJs": true,
+		"target": "ESNext",
+		"lib": [
+			"ESNext"
+		],
+		"types": [
+			"@typescript-to-lua/language-extensions",
+			"lua-types/5.4",
+			"love-typescript-definitions",
+			"./types/smods.d.ts",
+			"./types/balatro.d.ts",
+			"./types/socket.d.ts"
+		],
+		"allowJs": false,
+		"moduleResolution": "Node",
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"alwaysStrict": true,
-		"checkJs": true,
+		"checkJs": false,
 		"exactOptionalPropertyTypes": true,
-		"jsx": "react-jsx",
-		"jsxImportSource": "preact",
 		"noErrorTruncation": true,
 		"noFallthroughCasesInSwitch": false,
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,
+		"allowSyntheticDefaultImports": true,
 		"noPropertyAccessFromIndexSignature": false,
 		"noUncheckedIndexedAccess": false,
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
-		"strict": true,
-		"noEmit": true
+		"strict": true
 	},
-	"include": [
-		"./**/*"
-	]
+	"tstl": {
+		"luaTarget": "5.1",
+		"noImplicitSelf": true,
+		"noHeader": true,
+		"luaLibImport": "require",
+		"luaBundle": "balaum.lua",
+		"luaBundleEntry": "balaum.ts"
+	}
 }
